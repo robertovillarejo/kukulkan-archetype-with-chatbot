@@ -1,0 +1,13 @@
+{
+  "id" : "jpa",
+  "packaging" : "com.example",
+  "version" : "0.0.1",
+  "author" : "kukulkan",
+  "year" : "2018",
+  "database" : {
+    "databaseType" : "SQL_MYSQL",
+    "globalGenerationType" : "IDENTITY"
+  },
+  "layers" : [ "angular-js", "spring-rest", "spring-service", "spring-repository", "domain-core", "liquibase" ],
+  "timestamp" : "2018-05-07T14:05:58.997"
+}

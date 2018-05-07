@@ -1,0 +1,19 @@
+{
+    "home": {
+        "title": "Welcome, Jpa!",
+        "subtitle": "This is your homepage",
+        "logged": {
+            "message": "You are logged in as user \"{{username}}\"."
+        },
+        "question": "If you have any question on Jpa:",
+        "link": {
+            "homepage": "Jpa homepage",
+            "stackoverflow": "Jpa on Stack Overflow",
+            "bugtracker": "Jpa bug tracker",
+            "chat": "Jpa public chat room",
+            "follow": "follow @java_Jpa on Twitter"
+        },
+        "like": "If you like Jpa, don't forget to give us a star on",
+        "github": "GitHub"
+    }
+}
