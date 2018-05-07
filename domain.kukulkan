@@ -1,5 +1,6 @@
 entity Persona {
 	nombre: String,
 	apellido: String,
-	fechaNacimiento: Date
+	fechaNacimiento: Date,
+	fechaRegistro: Date
 }
