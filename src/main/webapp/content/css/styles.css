@@ -165,8 +165,7 @@ a.button {
     display: flex;
     margin: 0;
     padding: 0.25rem; }
-  #message_window #message_template {
-    display: none; }
+  #message_window #message_template { }
   #message_window .message {
     font-size: 14px;
     padding: 0.5rem;

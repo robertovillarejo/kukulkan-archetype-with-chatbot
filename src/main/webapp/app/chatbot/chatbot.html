@@ -1,13 +1,35 @@
 <div class="wrapper">
 
-    <div id="message_window">
+    <div id="message_window" ng-class="vm.connected ? 'connected' : 'disconnected'">
+        <div class="disconnected">
+            Disconnected... reconnecting!
+        </div>
+        <div class="offline">
+            Offline! Reload to reconnect.
+        </div>
+        <div class="powered_by">
+            <a href="https://www.infotec.mx/" target="_blank"> Infotec</a>
+        </div>
+        <section>
+            <div id="message_list" ng-repeat="msg in vm.messages track by msg.sent_timestamp">
+                <div class="message" ng-class="msg.type == 'incoming' ? 'message': 'outgoing'">
+                    {{ msg.text }}
+                    <div ng-show="vm.typing" class="typing-indicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </section>
         <div id="message_replies">
         </div>
         <div id="message_template"></div>
         <footer>
-            <form ng-submit="vm.send('Hey!', event)">
-                <input type="text" autocomplete="off" id="messenger_input" placeholder="Type here..." />
-                <button type="submit">Send</button>
+            <form ng-submit="vm.send(vm.messageOutgoing)">
+                <input type="text" ng-model="vm.messageOutgoing.text" autocomplete="off" id="messenger_input" placeholder="Type here..."
+                />
+                <button type="submit" data-translate="chatbot.send" ng-disabled="!vm.messageOutgoing.text">Send</button>
             </form>
         </footer>
     </div>

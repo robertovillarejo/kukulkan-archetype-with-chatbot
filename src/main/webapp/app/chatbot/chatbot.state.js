@@ -25,6 +25,7 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('health');
+                    $translatePartialLoader.addPart('chatbot');
                     return $translate.refresh();
                 }]
             }

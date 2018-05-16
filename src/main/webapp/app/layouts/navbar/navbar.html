@@ -8,8 +8,9 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand logo" href="#/" ng-click="vm.collapseNavbar()">
-                <img class="logo-img" src="content/images/logo-app.png" alt="logo"/>
-                <span data-translate="global.title">Jpa</span> <span class="navbar-version">v{{VERSION}}</span>
+                <img class="logo-img" src="content/images/logo-app.png" alt="logo" />
+                <span data-translate="global.title">Jpa</span>
+                <span class="navbar-version">v{{VERSION}}</span>
             </a>
         </div>
         <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()">
@@ -78,7 +79,7 @@
                         </li>
                     </ul>
                 </li>
-                <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
+                <li ng-class="{active: vm.$state.includes('admin')}" ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="admin-menu">
                         <span>
                             <span class="glyphicon glyphicon-tower"></span>
@@ -131,7 +132,7 @@
                         </li>
                         <li ui-sref-active="active">
                             <a ui-sref="chatbot" ng-click="vm.collapseNavbar()">
-                                <span class="glyphicon"></span>&nbsp;
+                                <span class="glyphicon glyphicon-comment"></span>&nbsp;
                                 <span>Chatbot</span>
                             </a>
                         </li>

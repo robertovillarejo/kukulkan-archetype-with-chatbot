@@ -5,10 +5,11 @@
         .module('jpaApp')
         .factory('ChatbotService', ChatbotService);
 
-    ChatbotService.$inject = ['$showdown'];
+    ChatbotService.$inject = ['$rootScope'];
 
-    function ChatbotService($showdown) {
+    function ChatbotService($rootScope) {
 
+        var socket = null;
         var config = {
             ws_url: (location.protocol === 'https:' ? 'wss' : 'ws') + '://localhost:8090',
             reconnect_timeout: 3000,
@@ -21,18 +22,13 @@
         };
 
         var reconnect_count = 0;
-        var guid = null;
         var current_user = null;
 
         var service = {
             send: send
         }
 
-        var socket;
-        var webhook;
-
         connect();
-
 
         function send(text, e) {
             if (e) e.preventDefault();
@@ -47,7 +43,7 @@
             deliverMessage({
                 type: 'message',
                 text: text,
-                user: guid,
+                user: null,
                 channel: options.use_sockets ? 'socket' : 'webhook'
             });
 
@@ -64,9 +60,9 @@
 
         function webhook(message) {
             request('/botkit/receive', message).then(function (message) {
-                trigger(message.type, message);
+                $rootScope.$emit('chatbot.message', message);
             }).catch(function (err) {
-                trigger('webhook_error', err);
+                $rootScope.$emit('chatbot.webhookError', err);
             });
 
         }
@@ -100,48 +96,20 @@
 
         }
 
-        function trigger(event, details) {
-            var event = new CustomEvent(event, {
-                detail: details
-            });
-            message_window.dispatchEvent(event);
-        }
-
-        function connect(user) {
-
-            connectWebsocket(config.ws_url);
-            /*
-                        if (user && user.id) {
-                            Botkit.setCookie('botkit_guid', user.id, 1);
-            
-                            user.timezone_offset = new Date().getTimezoneOffset();
-                            current_user = user;
-                            console.log('CONNECT WITH USER', user);
-                        }
-            
-                        // connect to the chat server!
-                        if (options.use_sockets) {
-                            connectWebsocket(config.ws_url);
-                        } else {
-                            connectWebhook();
-                        }
-            */
+        function connect() {
+            if (options.use_sockets) {
+                connectWebsocket(config.ws_url);
+            } else {
+                connectWebhook();
+            }
         };
 
         function connectWebhook() {
-            if (Botkit.getCookie('botkit_guid')) {
-                guid = Botkit.getCookie('botkit_guid');
-                connectEvent = 'welcome_back';
-            } else {
-                guid = generate_guid();
-                Botkit.setCookie('botkit_guid', guid, 1);
-            }
-
             // connect immediately
-            trigger('connected', {});
+            $rootScope.$emit('chatbot.connected');
             webhook({
                 type: connectEvent,
-                user: guid,
+                user: null,
                 channel: 'webhook',
             });
 
@@ -151,23 +119,15 @@
             // Create WebSocket connection.
             socket = new WebSocket(ws_url);
 
-            var connectEvent = 'hello';/*
-            if (Botkit.getCookie('botkit_guid')) {
-                guid = Botkit.getCookie('botkit_guid');
-                connectEvent = 'welcome_back';
-            } else {
-                guid = generate_guid();
-                Botkit.setCookie('botkit_guid', guid, 1);
-            }*/
-
+            var connectEvent = 'hello';
             // Connection opened
             socket.addEventListener('open', function (event) {
                 console.log('CONNECTED TO SOCKET');
+                $rootScope.$emit('chatbot.connected');
                 reconnect_count = 0;
-                trigger('connected', event);
                 deliverMessage({
                     type: connectEvent,
-                    user: guid,
+                    user: null,
                     channel: 'socket',
                     user_profile: current_user ? current_user : null,
                 });
@@ -179,14 +139,14 @@
 
             socket.addEventListener('close', function (event) {
                 console.log('SOCKET CLOSED!');
-                trigger('disconnected', event);
+                $rootScope.$emit('chatbot.disconnected');
                 if (reconnect_count < config.max_reconnect) {
                     setTimeout(function () {
                         console.log('RECONNECTING ATTEMPT ', ++reconnect_count);
                         connectWebsocket(config.ws_url);
                     }, config.reconnect_timeout);
                 } else {
-                    message_window.className = 'offline';
+                    $rootScope.$emit('chatbot.offline');
                 }
             });
 
@@ -199,8 +159,12 @@
                     r('socket_error', err);
                     return;
                 }
-
-                trigger(message.type, message);
+                if (message.type === 'typing') {
+                    $rootScope.$emit('chatbot.typing');
+                } else {
+                    message['type'] = 'incoming';
+                    $rootScope.$emit('chatbot.message', message);
+                }
             });
         };
         return service;
