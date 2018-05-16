@@ -18,7 +18,7 @@
         vm.send = function (msg, event) {
             if (msg.text) {
                 ChatbotService.send(msg.text, event);
-                msg['sent_timestamp'] = new Date();
+                msg['sent_timestamp'] = Date.now();
                 vm.messages.push(vm.messageOutgoing);
                 vm.messageOutgoing = getOutgoingMessage();
             }
