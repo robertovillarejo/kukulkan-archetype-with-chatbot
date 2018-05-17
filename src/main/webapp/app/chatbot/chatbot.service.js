@@ -5,13 +5,13 @@
         .module('jpaApp')
         .factory('ChatbotService', ChatbotService);
 
-    ChatbotService.$inject = ['$rootScope'];
+    ChatbotService.$inject = ['$rootScope', 'CHATBOT_URL'];
 
-    function ChatbotService($rootScope) {
+    function ChatbotService($rootScope, CHATBOT_URL) {
 
         var socket = null;
         var config = {
-            ws_url: (location.protocol === 'https:' ? 'wss' : 'ws') + '://localhost:8090',
+            ws_url: (location.protocol === 'https:' ? 'wss' : 'ws') + '://' + CHATBOT_URL,
             reconnect_timeout: 3000,
             max_reconnect: 5
         };

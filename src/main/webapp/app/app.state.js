@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -14,6 +14,11 @@
                 'navbar@': {
                     templateUrl: 'app/layouts/navbar/navbar.html',
                     controller: 'NavbarController',
+                    controllerAs: 'vm'
+                },
+                'chatbot@': {
+                    templateUrl: 'app/chatbot/chatbot.html',
+                    controller: 'ChatbotController',
                     controllerAs: 'vm'
                 }
             },
