@@ -11,7 +11,7 @@
 
         var socket = null;
         var config = {
-            ws_url: (location.protocol === 'https:' ? 'wss' : 'ws') + '://' + CHATBOT_URL,
+            ws_url: CHATBOT_URL,
             reconnect_timeout: 3000,
             max_reconnect: 5
         };
@@ -25,10 +25,9 @@
         var current_user = null;
 
         var service = {
-            send: send
+            send: send,
+            connect: connect
         }
-
-        connect();
 
         function send(text, e) {
             if (e) e.preventDefault();

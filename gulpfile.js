@@ -100,7 +100,7 @@ gulp.task('ngconstant:dev', function () {
             VERSION: util.parseVersion(),
             DEBUG_INFO_ENABLED: true,
             BUILD_TIMESTAMP: '',
-            CHATBOT_URL: 'localhost:8090'
+            CHATBOT_URL: 'ws://localhost:8090'
         },
         template: config.constantTemplate,
         stream: true

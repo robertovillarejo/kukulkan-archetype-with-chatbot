@@ -1,8 +1,7 @@
-<div id="embedded_messenger" class="active">
-    <header id="message_header">Chat</header>
+<div id="embedded_messenger" ng-class="vm.active? 'active': ''">
+    <header id="message_header" ng-click="vm.toggleWindow()" data-translate="chatbot.title"></header>
 
-    <div class="wrapper">
-
+    <div>
         <div id="message_window" ng-class="vm.connected ? 'connected' : 'disconnected'">
             <div class="disconnected">
                 Disconnected... reconnecting!
@@ -14,27 +13,26 @@
                 <a href="https://www.infotec.mx/" target="_blank"> Infotec</a>
             </div>
             <section>
-                <div id="message_list" ng-repeat="msg in vm.messages">
-                    <div class="message" ng-class="msg.type == 'incoming' ? 'message': 'outgoing'">
-                        {{ msg.text }}
-                        <div ng-show="vm.typing" class="typing-indicator">
-                            <span></span>
-                            <span></span>
-                            <span></span>
+                <div ng-class="vm.typing? 'typing-indicator' : ''">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div id="message_list" ng-repeat="msg in vm.messages | orderBy: 'sent_timestamp': true">
+                    <div id="message_template">
+                        <div class="message" ng-class="msg.type == 'incoming' ? 'message': 'outgoing'">
+                            {{ msg.text }}
                         </div>
                     </div>
                 </div>
             </section>
             <div id="message_replies">
             </div>
-            <div id="message_template"></div>
             <footer>
-                <form ng-submit="vm.send(vm.messageOutgoing)">
-                    <input type="text" ng-model="vm.messageOutgoing.text" autocomplete="off" id="messenger_input" placeholder="Type here..."
-                    />
+                <form ng-submit="vm.send()">
+                    <input type="text" ng-model="vm.messageOutgoing.text" autocomplete="off" placeholder="Type here..." />
                     <button type="submit" data-translate="chatbot.send" ng-disabled="!vm.messageOutgoing.text">Send</button>
                 </form>
             </footer>
         </div>
     </div>
-</div>

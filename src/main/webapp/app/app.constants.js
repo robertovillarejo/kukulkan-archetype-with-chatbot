@@ -6,6 +6,6 @@
         .constant('VERSION', "0.0.1-SNAPSHOT")
         .constant('DEBUG_INFO_ENABLED', true)
         .constant('BUILD_TIMESTAMP', "")
-        .constant('CHATBOT_URL', "localhost:8090")
+        .constant('CHATBOT_URL', "ws://localhost:8090")
 ;
 })();

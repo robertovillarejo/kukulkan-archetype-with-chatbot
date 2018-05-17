@@ -5,20 +5,31 @@
         .module('jpaApp')
         .controller('ChatbotController', ChatbotController);
 
-    ChatbotController.$inject = ['ChatbotService', '$rootScope'];
+    ChatbotController.$inject = ['ChatbotService', '$rootScope', '$translate', '$translatePartialLoader'];
 
-    function ChatbotController(ChatbotService, $rootScope) {
+    function ChatbotController(ChatbotService, $rootScope, $translate, $translatePartialLoader) {
+
+        $translatePartialLoader.addPart('chatbot');
+        $translate.refresh();
+
+        ChatbotService.connect();
+
         var vm = this;
         vm.connected = false;
         vm.messages = [];
         vm.typing = false;
         vm.inputText;
         vm.messageOutgoing = getOutgoingMessage();
+        vm.active = false;
 
-        vm.send = function (msg, event) {
-            if (msg.text) {
-                ChatbotService.send(msg.text, event);
-                msg['sent_timestamp'] = Date.now();
+        vm.toggleWindow = function () {
+            vm.active = !vm.active;
+        }
+
+        vm.send = function () {
+            if (vm.messageOutgoing.text) {
+                ChatbotService.send(vm.messageOutgoing.text);
+                vm.messageOutgoing['sent_timestamp'] = Date.now();
                 vm.messages.push(vm.messageOutgoing);
                 vm.messageOutgoing = getOutgoingMessage();
             }
