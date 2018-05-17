@@ -121,7 +121,6 @@
             var connectEvent = 'hello';
             // Connection opened
             socket.addEventListener('open', function (event) {
-                console.log('CONNECTED TO SOCKET');
                 $rootScope.$emit('chatbot.connected');
                 reconnect_count = 0;
                 deliverMessage({
@@ -133,15 +132,13 @@
             });
 
             socket.addEventListener('error', function (event) {
-                console.error('ERROR', event);
+                $rootScope.$emit('chatbot.error');
             });
 
             socket.addEventListener('close', function (event) {
-                console.log('SOCKET CLOSED!');
                 $rootScope.$emit('chatbot.disconnected');
                 if (reconnect_count < config.max_reconnect) {
                     setTimeout(function () {
-                        console.log('RECONNECTING ATTEMPT ', ++reconnect_count);
                         connectWebsocket(config.ws_url);
                     }, config.reconnect_timeout);
                 } else {

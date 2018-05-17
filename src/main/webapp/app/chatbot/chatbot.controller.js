@@ -5,9 +5,9 @@
         .module('jpaApp')
         .controller('ChatbotController', ChatbotController);
 
-    ChatbotController.$inject = ['ChatbotService', '$rootScope', '$translate', '$translatePartialLoader'];
+    ChatbotController.$inject = ['ChatbotService', '$rootScope', '$translate', '$translatePartialLoader', '$scope'];
 
-    function ChatbotController(ChatbotService, $rootScope, $translate, $translatePartialLoader) {
+    function ChatbotController(ChatbotService, $rootScope, $translate, $translatePartialLoader, $scope) {
 
         $translatePartialLoader.addPart('chatbot');
         $translate.refresh();
@@ -36,24 +36,28 @@
         }
 
         $rootScope.$on('chatbot.disconnected', function () {
-            console.log('Chatbot disconnected');
-            vm.connected = false;
+            $scope.$apply(function () {
+                vm.connected = false;
+            });
         });
 
         $rootScope.$on('chatbot.connected', function () {
-            console.log('Chatbot connected');
-            vm.connected = true;
+            $scope.$apply(function () {
+                vm.connected = true;
+            });
         });
 
         $rootScope.$on('chatbot.message', function (event, message) {
-            console.log(message);
-            vm.messages.push(message);
-            vm.typing = false;
+            $scope.$apply(function () {
+                vm.messages.push(message);
+                vm.typing = false;
+            });
         });
 
         $rootScope.$on('chatbot.typing', function (event, message) {
-            console.log("Typing...");
-            vm.typing = true;
+            $scope.$apply(function () {
+                vm.typing = true;
+            });
         });
 
         function getOutgoingMessage() {

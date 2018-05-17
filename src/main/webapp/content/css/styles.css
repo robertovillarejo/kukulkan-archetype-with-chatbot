@@ -153,6 +153,9 @@
     .typing-indicator span:nth-of-type(3) {
       animation: 1s blink infinite 0.9999s; }
 
+@keyframes blink {
+  50% {
+    opacity: 1; } }
 /*# sourceMappingURL=styles.css.map */
 
 #embedded_messenger {
