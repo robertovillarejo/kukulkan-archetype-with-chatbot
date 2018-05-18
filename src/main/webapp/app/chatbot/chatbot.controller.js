@@ -18,7 +18,6 @@
         vm.connected = false;
         vm.messages = [];
         vm.typing = false;
-        vm.inputText;
         vm.messageOutgoing = getOutgoingMessage();
         vm.active = false;
 

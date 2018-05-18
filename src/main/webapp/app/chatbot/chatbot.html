@@ -30,7 +30,7 @@
             </div>
             <footer>
                 <form ng-submit="vm.send()">
-                    <input type="text" ng-model="vm.messageOutgoing.text" autocomplete="off" placeholder="Type here..." />
+                    <input type="text" ng-model="vm.messageOutgoing.text" autocomplete="off" translate translate-attr-placeholder="chatbot.typeHere"/>
                     <button type="submit" data-translate="chatbot.send" ng-disabled="!vm.messageOutgoing.text">Send</button>
                 </form>
             </footer>
