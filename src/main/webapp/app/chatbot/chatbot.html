@@ -1,38 +1,41 @@
-<div id="embedded_messenger" ng-class="vm.active? 'active': ''">
-    <header id="message_header" ng-click="vm.toggleWindow()" data-translate="chatbot.title"></header>
-
-    <div>
-        <div id="message_window" ng-class="vm.connected ? 'connected' : 'disconnected'">
-            <div class="disconnected">
-                Disconnected... reconnecting!
-            </div>
-            <div class="offline">
-                Offline! Reload to reconnect.
-            </div>
-            <div class="powered_by">
-                <a href="https://www.infotec.mx/" target="_blank"> Infotec</a>
-            </div>
-            <section>
-                <div ng-class="vm.typing ? 'typing-indicator' : ''">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+<div class="main-section" ng-class="vm.active? 'open-more': ''">
+    <div class="row border-chat" ng-click="vm.toggleWindow()">
+        <div class="col-md-12 col-sm-12 col-xs-12 first-section">
+            <div class="row">
+                <div class="col-md-8 col-sm-6 col-xs-6 left-first-section">
+                    <p data-translate="chatbot.title">Chatbot</p>
                 </div>
-                <div id="message_list" ng-repeat="msg in vm.messages | orderBy: 'sent_timestamp': true">
-                    <div id="message_template">
-                        <div class="message" ng-class="msg.type == 'incoming' ? 'message': 'outgoing'">
-                            {{ msg.text }}
-                        </div>
-                    </div>
+                <div class="col-md-4 col-sm-6 col-xs-6 right-first-section">
+                    <a>
+                        <i ng-class="vm.active? 'fa fa-angle-down': 'fa fa-angle-up'" aria-hidden="true"></i>
+                    </a>
                 </div>
-            </section>
-            <div id="message_replies">
             </div>
-            <footer>
-                <form ng-submit="vm.send()">
-                    <input type="text" ng-model="vm.messageOutgoing.text" autocomplete="off" translate translate-attr-placeholder="chatbot.typeHere"/>
-                    <button type="submit" data-translate="chatbot.send" ng-disabled="!vm.messageOutgoing.text">Send</button>
-                </form>
-            </footer>
         </div>
     </div>
+    <div class="row border-chat">
+        <div class="col-md-12 col-sm-12 col-xs-12 second-section">
+            <div class="chat-section">
+                <ul ng-repeat="msg in vm.messages | orderBy: 'sent_timestamp': false">
+                    <li>
+                        <div ng-class="msg.type=='incoming' ? 'left-chat': 'right-chat' ">
+                            <img src="content/images/app2x.png">
+                            <p>{{msg.text}}</p>
+                            <span>{{msg.sent_timestamp | date: 'short'}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row border-chat ">
+        <div class="col-md-12 col-sm-12 col-xs-12 third-section ">
+            <div class="text-bar ">
+                <form ng-submit="vm.send() ">
+                    <input type="text" ng-model="vm.messageOutgoing.text" autocomplete="off" translate translate-attr-placeholder="chatbot.typeHere">
+                    <button type="submit" class="fa fa-arrow-right" aria-hidden="true" ng-disabled="!vm.messageOutgoing.text"></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

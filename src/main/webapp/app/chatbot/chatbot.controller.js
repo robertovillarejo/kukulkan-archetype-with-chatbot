@@ -5,12 +5,9 @@
         .module('jpaApp')
         .controller('ChatbotController', ChatbotController);
 
-    ChatbotController.$inject = ['ChatbotService', '$rootScope', '$translate', '$translatePartialLoader', '$scope'];
+    ChatbotController.$inject = ['ChatbotService', '$rootScope', '$scope'];
 
-    function ChatbotController(ChatbotService, $rootScope, $translate, $translatePartialLoader, $scope) {
-
-        $translatePartialLoader.addPart('chatbot');
-        $translate.refresh();
+    function ChatbotController(ChatbotService, $rootScope, $scope) {
 
         ChatbotService.connect();
 
@@ -31,6 +28,7 @@
                 vm.messageOutgoing['sent_timestamp'] = Date.now();
                 vm.messages.push(vm.messageOutgoing);
                 vm.messageOutgoing = getOutgoingMessage();
+                autoScroll();
             }
         }
 
@@ -50,6 +48,8 @@
             $scope.$apply(function () {
                 vm.messages.push(message);
                 vm.typing = false;
+                vm.active = true;
+                autoScroll();
             });
         });
 
@@ -64,6 +64,12 @@
                 type: 'outgoing',
                 text: null
             }
+        }
+
+        function autoScroll() {
+            var messagesSection = angular.element('.chat-section');
+            var scrollPosition = messagesSection.scrollTop();
+            messagesSection.stop().animate({ scrollTop: scrollPosition + 1000 }, 500, 'swing');
         }
     }
 

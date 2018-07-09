@@ -24,10 +24,6 @@
             if (!text) {
                 return;
             }
-            var message = {
-                type: 'outgoing',
-                text: text
-            };
 
             Principal.identity().then(function (account) {
                 deliverMessage({
