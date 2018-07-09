@@ -18,8 +18,9 @@
             <div class="chat-section">
                 <ul ng-repeat="msg in vm.messages | orderBy: 'sent_timestamp': false">
                     <li>
-                        <div ng-class="msg.type=='incoming' ? 'left-chat': 'right-chat' ">
-                            <img src="content/images/app2x.png">
+                        <div ng-class="msg.type === 'incoming' ? 'left-chat': 'right-chat' ">
+                            <img src="content/images/robot-solid.svg" ng-if="msg.type === 'incoming'">
+                            <img src="content/images/app2x.png" ng-if="msg.type === 'outgoing'">
                             <p>{{msg.text}}</p>
                             <span>{{msg.sent_timestamp | date: 'short'}}</span>
                         </div>
