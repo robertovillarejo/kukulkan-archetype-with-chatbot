@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -15,6 +15,11 @@
                     templateUrl: 'app/layouts/navbar/navbar.html',
                     controller: 'NavbarController',
                     controllerAs: 'vm'
+                },
+                'chatbot@': {
+                    templateUrl: 'app/chatbot/chatbot.html',
+                    controller: 'ChatbotController',
+                    controllerAs: 'vm'
                 }
             },
             resolve: {
@@ -25,6 +30,7 @@
                 ],
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('global');
+                    $translatePartialLoader.addPart('chatbot');
                 }]
             }
         });

@@ -99,7 +99,8 @@ gulp.task('ngconstant:dev', function () {
         constants: {
             VERSION: util.parseVersion(),
             DEBUG_INFO_ENABLED: true,
-            BUILD_TIMESTAMP: ''
+            BUILD_TIMESTAMP: '',
+            CHATBOT_URL: 'ws://chatbot-archetype.herokuapp.com/'
         },
         template: config.constantTemplate,
         stream: true

@@ -1,0 +1,7 @@
+entity Persona {
+	nombre: String,
+	apellido: String,
+	fecha: Date,
+	fechaEnZona: ZonedDateTime,
+	fechaLocal: LocalDate
+}
