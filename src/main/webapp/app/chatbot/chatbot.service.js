@@ -14,6 +14,7 @@
         var reconnect_timeout = 3000;
         var max_reconnect = 5;
         var reconnect_count = 0;
+        var anonymousUser = Date.now().toString();
 
         var service = {
             send: send,
@@ -23,10 +24,14 @@
         function send(text) {
             if (text) {
                 Principal.identity().then(function (account) {
+                    var userId = anonymousUser;
+                    if (account) {
+                        userId = account.email;
+                    }
                     deliverMessage({
                         type: 'message',
                         text: text,
-                        user: account.email,
+                        user: userId,
                         channel: 'socket'
                     });
                 });
@@ -47,9 +52,13 @@
                 $rootScope.$emit('chatbot.connected');
                 reconnect_count = 0;
                 Principal.identity().then(function (account) {
+                    var userId = anonymousUser;
+                    if (account) {
+                        userId = account.email;
+                    }
                     deliverMessage({
                         type: connectEvent,
-                        user: account.email,
+                        user: userId,
                         channel: 'socket'
                     });
                 });
