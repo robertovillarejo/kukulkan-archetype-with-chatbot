@@ -21,20 +21,16 @@
         }
 
         function send(text) {
-            if (!text) {
-                return;
-            }
-
-            Principal.identity().then(function (account) {
-                deliverMessage({
-                    type: 'message',
-                    text: text,
-                    user: account.email,
-                    channel: 'socket'
+            if (text) {
+                Principal.identity().then(function (account) {
+                    deliverMessage({
+                        type: 'message',
+                        text: text,
+                        user: account.email,
+                        channel: 'socket'
+                    });
                 });
-            });
-
-            return false;
+            }
         }
 
         function deliverMessage(message) {
